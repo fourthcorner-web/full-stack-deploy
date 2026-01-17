@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -135,13 +136,21 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Change this part to use BASE_DIR
+# This tells Django where to copy all static files for production
+# This is the line you were missing!
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Where Django looks for your custom CSS/JS
 STATICFILES_DIRS = [
     BASE_DIR / "core" / "static",
 ]
+
 # Media files settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# This is CRITICAL for Render to serve your Jazzmin styles correctly
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
