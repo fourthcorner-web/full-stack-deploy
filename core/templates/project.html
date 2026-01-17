@@ -1,0 +1,401 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/solid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/brands.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/regular.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="icon" type="image/webp" sizes="32x32" href="{% static 'image/favicon-32x32.webp' %}">
+    <link rel="icon" type="image/webp" sizes="16x16" href="{% static 'image/favicon-16x16.webp' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'image/apple-touch-icon.webp' %}">
+    
+    <title>FOURTH-CORNER - Projects</title>
+</head>
+
+<body>
+    <div id="google_translate_wrapper">
+        <div id="google_translate_element"></div>
+    </div>
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'ar,en,fr,es,de,it,zh-CN,hi,pt,ru',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+    }, 'google_translate_element');
+    }
+
+    // THIS KILLS THE TOP BAR AUTOMATICALLY - Using MutationObserver for better performance
+    (function() {
+        var banner = document.querySelector(".goog-te-banner-frame");
+        if(banner) {
+            banner.style.display = 'none';
+            document.body.style.top = '0px';
+            return; // Exit early if banner already exists
+        }
+        
+        // Use MutationObserver to watch for banner creation
+        var observer = new MutationObserver(function(mutations) {
+            var banner = document.querySelector(".goog-te-banner-frame");
+            if(banner) {
+                banner.style.display = 'none';
+                document.body.style.top = '0px';
+                observer.disconnect(); // Stop observing after success
+            }
+        });
+        
+        // Start observing the document body for changes
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+        
+        // Fallback: Clear observer after 5 seconds to prevent memory leaks
+        setTimeout(function() {
+            observer.disconnect();
+        }, 5000);
+    })();
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        /* POSITION & TRANSPARENCY */
+        #google_translate_wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999999 !important;
+            background: transparent !important;
+            pointer-events: auto !important;
+        }
+
+        /* DARK MODE BUTTON STYLE */
+        .goog-te-gadget .goog-te-combo {
+            background: rgba(10, 17, 40, 0.9) !important; /* Theme dark blue */
+            color: #ffffff !important;
+            border: 1px solid #f02d2d !important; /* Theme red border */
+            padding: 8px !important;
+            border-radius: 4px !important;
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+        }
+
+        /* THE HARD HIDER - Targets the bar in image_f567a9.webp */
+        body { 
+            top: 0 !important; 
+            position: static !important; 
+        }
+        
+        .goog-te-banner-frame, 
+        .goog-te-banner, 
+        .goog-te-balloon-frame,
+        #goog-gt-tt,
+        .goog-te-spawn-frame,
+        .skiptranslate iframe {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0 !important;
+        }
+
+        /* Hiding the tooltips on hover */
+        .goog-tooltip, .goog-tooltip:hover {
+            display: none !important;
+        }
+
+        /* MOBILE FIX */
+        @media (max-width: 768px) {
+            #google_translate_wrapper {
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+    <!-- Scripts -->
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+
+    <!-- Header -->
+    <div class="sticky-top bg-dark-color">
+        <div class="r-container">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <div class="logo-container">
+                        <a class="navbar-brand" href="{% url 'index' %}">
+                            <img src="{% static 'image/Logo.webp' %}" alt="fourth-corner" class="img-fluid">
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-4 gap-2 px-lg-0 px-4">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'about' %}">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'service' %}">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'project' %}">Projects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'blog_list' %}">Blog</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'career' %}">Career</a>
+                            </li>                            
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'contact' %}">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main>
+        <!-- Banner -->
+        {% static 'image/service-banner.webp' as service_bg %}
+        <div class="section position-relative reveal-trigger" style="background-image: url('{{ service_bg }}'); background-size: cover; background-position: center;">
+            <div class="image-overlay"></div>
+            <div class="r-container h-100 position-relative" style="z-index: 2;">
+                <div class="d-flex flex-column w-100 h-100 justify-content-center align-items-center mx-auto text-center text-white gap-3 py-5"
+                    style="max-width: 895px;">
+                    
+                    <h1 class="font-1 m-0 fw-bold scroll-reveal del-1">PROJECTS</h1>
+                    
+                    <nav aria-label="breadcrumb" class="scroll-reveal del-2">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item active text-danger fw-bold" aria-current="page">Projects</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <section class="py-5 reveal-trigger" style="background-color: #0d1633; color: white;">
+            <div class="container pt-5">
+                <div class="mb-5 scroll-reveal">
+                    <div class="d-flex align-items-center gap-3 mb-2 scroll-reveal">
+                        <div style="width: 50px; height: 2px; background: #f02d2d;"></div>
+                        <h6 class="text-danger fw-bold text-uppercase mb-0" style="letter-spacing: 5px;">Our Work</h6>
+                    </div>
+                    <h2 class="display-5 fw-bolder text-uppercase scroll-reveal">
+                        Our <span style="color: #f02d2d;">Strategic</span> Portfolio
+                    </h2>
+                </div>
+                
+                {% for category in categories %}
+                <div class="category-block mb-5 scroll-reveal" id="industry-{{ category.id }}">
+                    <div class="d-flex align-items-center mb-4">
+                        <h4 class="fw-bold text-uppercase m-0">
+                            <span class="text-danger me-2">{{ forloop.counter|stringformat:"02d" }}/</span> 
+                            {{ category.name }}
+                        </h4>
+                    </div>
+
+                    <div class="row g-4 scroll-reveal">
+                        {% for project in category.featured_projects %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="project-item" data-bs-toggle="modal" data-bs-target="#modal{{ project.id }}" style="cursor: pointer;">
+                                <div class="project-box">
+                                    <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}" class="project-img" loading="lazy">
+                                    <div class="project-overlay">
+                                        <div class="project-content">
+                                            <h5 class="fw-bold text-uppercase mb-1 text-white">{{ project.title }}</h5>
+                                            <p class="small opacity-75 mb-0 text-white-50">{{ project.short_desc }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12" scroll-reveal>
+                            <p class="text-white-50 small italic">No projects marked as "Show on Homepage" in this category.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if category.has_more_projects %}
+                    <div class="text-center mt-4 scroll-reveal">
+                        <a href="{% url 'industry_detail' category.id %}" class="btn btn-outline-danger btn-sm rounded-0 px-4 py-2 text-uppercase" style="letter-spacing: 2px; font-size: 0.75rem;">
+                            View All {{ category.name }} Projects
+                        </a>
+                    </div>
+                    {% endif %}
+                    
+                    {% if not forloop.last %}
+                        <hr class="border-white border-opacity-10 mt-5 scroll-reveal">
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        {% for category in categories %}
+            {% for project in category.featured_projects %}
+            <div class="modal fade" id="modal{{ project.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content border-0 rounded-0 shadow-lg" style="background-color: #0d1633; color: white;">
+                        
+                        <div class="modal-header border-bottom border-white border-opacity-10 sticky-top" style="background-color: #0d1633; z-index: 1050; display: block; padding-top: 4rem; padding-bottom: 2rem;">
+                            <div class="container-fluid">
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div class="pe-3"><br>
+                                        <h6 class="text-danger fw-bold text-uppercase mb-3" style="letter-spacing: 3px; font-size: 0.85rem;">Project Technical Sheet</h6>
+                                        <h2 class="modal-title fw-bolder text-uppercase font-1 m-0" style="letter-spacing: 1px; line-height: 1.2; font-size: calc(1.4rem + .7vw);">{{ project.title }}</h2>
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="margin-top: 25px;"></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-body p-0">
+                            <div class="container-fluid px-0">
+                                {% for section in project.sections.all %}
+                                <div class="project-section border-bottom border-white border-opacity-10 {% if not forloop.last %}pb-5{% else %}py-5{% endif %}">
+                                    <div class="img-wrapper mb-4">
+                                        <img src="{{ section.image.url }}" class="w-100 object-fit-cover" style="max-height: 550px;" alt="{{ section.title }}" loading="lazy">
+                                    </div>
+                                    
+                                    <div class="px-4 px-md-5 {% if forloop.first %}py-4{% endif %}">
+                                        <h3 class="fw-bold text-uppercase text-danger mb-4">{{ section.title }}</h3>
+                                        <p class="opacity-75 lh-lg {% if forloop.first %}fs-5{% endif %}">
+                                            {{ section.description }}
+                                        </p>
+
+                                        {% if forloop.first %}
+                                        <div class="row g-3 mt-4">
+                                            <div class="col-6 col-md-4">
+                                                <div class="p-3 border border-white border-opacity-10 rounded-1">
+                                                    <p class="text-white-50 small text-uppercase mb-1" style="font-size: 0.65rem; letter-spacing: 1px;">Status</p>
+                                                    <p class="fw-bold mb-0 text-white">{{ project.status }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-4">
+                                                <div class="p-3 border border-white border-opacity-10 rounded-1">
+                                                    <p class="text-white-50 small text-uppercase mb-1" style="font-size: 0.65rem; letter-spacing: 1px;">Location</p>
+                                                    <p class="fw-bold mb-0 text-white">{{ project.location }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                                <div class="mt-5 pb-5 text-center">
+                                    <button type="button" class="btn btn-danger rounded-0 px-5 py-3 fw-bold text-uppercase shadow" data-bs-dismiss="modal" style="letter-spacing: 2px;">Close Technical Sheet</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endfor %}
+    
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <div class="section py-5 position-relative" style="background-color: #0a0e1a;">
+            <div class="r-container position-relative" style="z-index: 2;">
+                <div class="row row-cols-lg-4 row-cols-md-2 row-cols-1 g-5">
+                    
+                    <div class="col">
+                        <div class="d-flex flex-column gap-3">
+                            <img src="{% static 'image/Logo.webp' %}" alt="Fourth Corner Logo" class="img-fluid" width="200">
+                            <p class="opacity-75 mt-2" style="font-size: 0.9rem; line-height: 1.8;">
+                            Fourth Corner is an Iraqi company providing integrated engineering and industrial solutions, committed to quality, safety, and reliability across Iraq. 
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Quick Links</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-2">
+                            <li><a href="{% url 'about' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>About Us</a></li>
+                            <li><a href="{% url 'service' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>Services</a></li>
+                            <li><a href="{% url 'contact' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Services</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li>
+                                <a href="{% url 'fire_industry' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>FIRE & INDUSTRIAL SAFETY</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'electrical_systems' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>ELECTRICAL & POWER SYSTEMS</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'construction' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>ENGINEERING CONSTRUCTION</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Get In Touch</h5>
+                        <div class="d-flex flex-column gap-3">
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-location-dot me-2 accent-color"></i>Second Floor, Fourth Corner, Basra, Iraq</p>
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-phone me-2 accent-color"></i>+964 780227 5772</p>
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-envelope me-2 accent-color"></i> info@fourth-corner.com</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="py-3 border-top border-secondary" style="background-color: #0a0e1a;">
+            <div class="container text-center">
+                <span class="opacity-50 small">
+                    Copyright © 2025 **FOURTH-CORNER**. All Rights Reserved.
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/vendor/bootstrap.bundle.min.js' %}" defer></script>
+    <script src="{% static 'js/script.js' %}" defer></script>
+    <script src="{% static 'js/vendor/isotope.pkgd.min.js' %}" defer></script>
+    <script src="{% static 'js/video_embedded.js' %}" defer></script>
+    <script src="{% static 'js/vendor/fslightbox.js' %}" defer></script>
+</body>
+</html>

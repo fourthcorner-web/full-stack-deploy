@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>FOURTH-CORNER - 404</title>
+</head>
+
+<body>
+    <!-- Scripts -->
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+
+    <main>
+            <div class="r-container d-flex align-items-center h-100 position-relative" style="z-index: 2;">
+                <div class="row row-cols-lg-2 row-cols-1">
+                    <div class="col">
+                        <div
+                            class="d-flex flex-column justify-content-center align-items-lg-start align-items-center text-lg-start text-center">
+                            <h1 class="font-1 fw-bold accent-color m-0 lh-1" style="font-size: 11.12rem;">404</h1>
+                            <h1 class="font-1 fw-bold fs-very-large">PAGE NOT FOUND</h1>
+                            <p>
+                                The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+                            </p>
+                            <div class="w-100">
+                                <a href="{% url 'index' %}" class="btn btn-accent font-1 fw-bold">Back To Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

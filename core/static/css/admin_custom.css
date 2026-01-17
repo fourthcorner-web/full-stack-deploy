@@ -1,0 +1,30 @@
+/* static/css/admin_custom.css */
+
+/* The header of each section */
+.inline-related h3 {
+    background: #444 !important; /* Darker header */
+    color: white !important;
+    transition: background 0.2s ease;
+}
+
+.inline-related h3:hover {
+    background: #f02d2d !important; /* Turns red when you hover to drag */
+}
+
+/* The "Ghost" box showing where it will land */
+.ui-state-highlight {
+    background: rgba(240, 45, 45, 0.1) !important;
+    border: 2px dashed #f02d2d !important;
+    margin-bottom: 1.5em;
+    border-radius: 4px;
+}
+
+/* Smooth transition for other boxes moving out of the way */
+.inline-related {
+    transition: margin 0.1s ease;
+}
+
+/* Hide the 'Order' input field so the admin looks cleaner */
+.field-order {
+    display: none !important;
+}

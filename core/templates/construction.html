@@ -1,0 +1,521 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/solid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/brands.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/regular.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="icon" type="image/webp" sizes="32x32" href="{% static 'image/favicon-32x32.webp' %}">
+    <link rel="icon" type="image/webp" sizes="16x16" href="{% static 'image/favicon-16x16.webp' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'image/apple-touch-icon.webp' %}">
+    
+    <title>FOURTH-CORNER - Services</title>
+</head>
+
+<body>
+    <div id="google_translate_wrapper">
+        <div id="google_translate_element"></div>
+    </div>
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'ar,en,fr,es,de,it,zh-CN,hi,pt,ru',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+    }, 'google_translate_element');
+    }
+
+    // THIS KILLS THE TOP BAR AUTOMATICALLY - Using MutationObserver for better performance
+    (function() {
+        var banner = document.querySelector(".goog-te-banner-frame");
+        if(banner) {
+            banner.style.display = 'none';
+            document.body.style.top = '0px';
+            return; // Exit early if banner already exists
+        }
+        
+        // Use MutationObserver to watch for banner creation
+        var observer = new MutationObserver(function(mutations) {
+            var banner = document.querySelector(".goog-te-banner-frame");
+            if(banner) {
+                banner.style.display = 'none';
+                document.body.style.top = '0px';
+                observer.disconnect(); // Stop observing after success
+            }
+        });
+        
+        // Start observing the document body for changes
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+        
+        // Fallback: Clear observer after 5 seconds to prevent memory leaks
+        setTimeout(function() {
+            observer.disconnect();
+        }, 5000);
+    })();
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        /* POSITION & TRANSPARENCY */
+        #google_translate_wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999999 !important;
+            background: transparent !important;
+            pointer-events: auto !important;
+        }
+
+        /* DARK MODE BUTTON STYLE */
+        .goog-te-gadget .goog-te-combo {
+            background: rgba(10, 17, 40, 0.9) !important; /* Theme dark blue */
+            color: #ffffff !important;
+            border: 1px solid #f02d2d !important; /* Theme red border */
+            padding: 8px !important;
+            border-radius: 4px !important;
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+        }
+
+        /* THE HARD HIDER - Targets the bar in image_f567a9.webp */
+        body { 
+            top: 0 !important; 
+            position: static !important; 
+        }
+        
+        .goog-te-banner-frame, 
+        .goog-te-banner, 
+        .goog-te-balloon-frame,
+        #goog-gt-tt,
+        .goog-te-spawn-frame,
+        .skiptranslate iframe {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0 !important;
+        }
+
+        /* Hiding the tooltips on hover */
+        .goog-tooltip, .goog-tooltip:hover {
+            display: none !important;
+        }
+
+        /* MOBILE FIX */
+        @media (max-width: 768px) {
+            #google_translate_wrapper {
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+    <!-- Scripts -->
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+
+    <!-- Header -->
+    <div class="sticky-top bg-dark-color">
+        <div class="r-container">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <div class="logo-container">
+                        <a class="navbar-brand" href="{% url 'index' %}">
+                            <img src="{% static 'image/Logo.webp' %}" alt="fourth-corner" class="img-fluid">
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-4 gap-2 px-lg-0 px-4">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'about' %}">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'service' %}">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'project' %}">Projects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'blog_list' %}">Blog</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'career' %}">Career</a>
+                            </li>                            
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'contact' %}">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main>
+        <!-- Banner -->
+        {% static 'image/consttraction.webp' as const_bg %}
+        <div class="section position-relative overflow-hidden reveal-trigger" 
+            style="background-image: url('{{ const_bg }}'); background-attachment: fixed; background-size: cover; background-position: center;">
+                <div class="image-overlay"></div>
+                <div class="r-container h-100 position-relative" style="z-index: 2;">
+                    <div class="d-flex flex-column w-100 h-100 justify-content-center align-items-center mx-auto text-center text-white gap-3 py-5"
+                        style="max-width: 895px;">
+                        
+                        <h1 class="font-1 m-0 fw-bold scroll-reveal from-bottom del-1 display-5 text-uppercase">
+                            Engineering & Construction
+                        </h1>
+                        
+                        <nav aria-label="breadcrumb" class="scroll-reveal from-bottom del-3">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></li>
+                                <li class="breadcrumb-item active text-danger fw-bold" aria-current="page">ENGINEERING & CONSTRUCTION SERVICE</li>
+                            </ol>
+                        </nav>
+                        
+                    </div>
+                </div>
+            </div>
+
+        <section class="py-5 reveal-trigger" style="background-color: var(--dark-color); color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+            <div class="container py-4 py-lg-5">
+                <div class="row g-4 g-lg-5">
+                    
+                    <div class="col-lg-8 order-1">
+                        <div class="d-flex flex-column gap-4">
+                            
+                                <div class="position-relative overflow-hidden scroll-reveal from-bottom del-1" style="height: 300px; height: lg-450px; border: 1px solid rgba(255,255,255,0.1);">
+                                <img src="{% static 'image/d1-p1-5.webp' %}" alt="Engineering & Construction" class="w-100 h-100 object-fit-cover">
+                            </div>
+
+                            <div class="border-start border-5 border-danger ps-3 ps-lg-4 mb-2 scroll-reveal from-left del-2">
+                                <span class="text-uppercase fw-bold text-danger mb-1 d-block" style="letter-spacing: 2px; font-size: 0.75rem;">Division 03</span>
+                                <h2 class="h1 fw-bolder text-uppercase text-white lh-1 mb-0">Engineering & Construction</h2>
+                            </div>
+
+                            <div class="mt-2 scroll-reveal from-bottom del-3">
+                                <h5 class="fw-bold text-uppercase border-bottom border-white border-opacity-10 pb-2 mb-3" style="letter-spacing: 1px; color: #f02d2d;">Overview</h5>
+                                <p class="lh-base fs-6 fs-lg-5 text-white opacity-75" style="text-align: justify;">
+                                    Fourth Corner is a specialized engineering and construction company delivering integrated solutions across industrial construction, electrical systems, and fire protection. Our division supports projects from initial engineering through construction, testing, commissioning, and long-term operational support. We combine technical expertise with structured execution to deliver reliable, compliant, and efficient solutions tailored to the specific requirements of each project.
+                                </p>
+                            </div>
+
+                            <div class="mt-3 p-4 p-lg-5 scroll-reveal from-bottom del-4" style="background-color: rgba(255,255,255,0.03); border-top: 4px solid #f02d2d;">
+                                <h5 class="fw-bold text-uppercase mb-4 text-white" style="letter-spacing: 2px;">Core Capabilities</h5>
+                                
+                                <div class="row g-3 g-lg-4">
+                                    <div class="col-12 col-md-6 scroll-reveal from-bottom del-1">
+                                        <div class="d-flex align-items-start gap-3 capability-item">
+                                            <div class="mt-2" style="min-width: 8px; height: 8px; background: #f02d2d;"></div>
+                                            <p class="fw-semibold text-white mb-0 small text-uppercase" style="letter-spacing: 0.5px;">Industrial construction and infrastructure works</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 scroll-reveal from-bottom del-2">
+                                        <div class="d-flex align-items-start gap-3 capability-item">
+                                            <div class="mt-2" style="min-width: 8px; height: 8px; background: #f02d2d;"></div>
+                                            <p class="fw-semibold text-white mb-0 small text-uppercase" style="letter-spacing: 0.5px;">Fire protection systems installation and integration</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 scroll-reveal from-bottom del-3">
+                                        <div class="d-flex align-items-start gap-3 capability-item">
+                                            <div class="mt-2" style="min-width: 8px; height: 8px; background: #f02d2d;"></div>
+                                            <p class="fw-semibold text-white mb-0 small text-uppercase" style="letter-spacing: 0.5px;">Electrical and power installation services</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 scroll-reveal from-bottom del-4">
+                                        <div class="d-flex align-items-start gap-3 capability-item">
+                                            <div class="mt-2" style="min-width: 8px; height: 8px; background: #f02d2d;"></div>
+                                            <p class="fw-semibold text-white mb-0 small text-uppercase" style="letter-spacing: 0.5px;">Testing, commissioning, and technical support</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 scroll-reveal from-bottom del-5">
+                                        <div class="d-flex align-items-start gap-3 capability-item">
+                                            <div class="mt-2" style="min-width: 8px; height: 8px; background: #f02d2d;"></div>
+                                            <p class="fw-semibold text-white mb-0 small text-uppercase" style="letter-spacing: 0.5px;">Inspection, maintenance, and operational services</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reveal-trigger mt-3">
+                            <a href="{% url 'project' %}#industry-6" class="btn-view-projects scroll-reveal del-2">
+                                View Engineering Construction Projects <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 order-2">
+                        <div class="sticky-top scroll-reveal from-right del-5" style="top: 100px;">
+                            <div class="p-4 py-lg-5" style="background-color: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);">
+                                <h6 class="fw-bold text-uppercase mb-4 text-danger" style="letter-spacing: 2px;">Service Divisions</h6>
+                                <ul class="list-unstyled d-flex flex-column gap-2">
+                                    <li>
+                                        <a href="{% url 'fire_industry' %}" class="text-decoration-none p-3 d-block border border-white border-opacity-10 text-white-50 sidebar-link">
+                                            FIRE & INDUSTRIAL SAFETY
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'electrical_systems' %}" class="text-decoration-none p-3 d-block border border-white border-opacity-10 text-white-50 sidebar-link">
+                                            ELECTRICAL & POWER SYSTEMS
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'construction' %}" class="text-decoration-none p-3 d-block bg-danger text-white fw-bold shadow-sm">
+                                            ENGINEERING CONSTRUCTION
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- faq -->
+        <!-- <div class="section bg-secondary-color">
+            <div class="r-container">
+                <div class="row row-cols-lg-2 row-cols-1">
+                    <div class="col mb-3">
+                        <div
+                            class="d-flex flex-column gap-3 align-items-center align-items-lg-start text-center text-lg-start ps-lg-4">
+                            <span class="subheading">Firefighter FAQs</span>
+                            <h1 class="font-1 fw-bolder lh-1">FIREFIGHTER FAQS FOR THE PUBLIC</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel erat nibh. Sed rutrum
+                                turpis quis lacinia sollicitudin. Sed ac neque cursus, ornare augue.
+                            </p>
+                            <div>
+                                <img src="image/dummy-img-600x400.webp" alt="" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                                        How Do I Contact The Firefighter Department In Case Of An Emergency ?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse show"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Nam ac neque sit amet velit gravida laoreet. Pellentesque nunc dolor, fermentum
+                                        ut dictum eu, ornare quis leo. Suspendisse varius, eros non posuere egestas,
+                                        ipsum augue congue nunc, sed gravida ante purus at diam. Suspendisse potenti.
+                                        Aenean venenatis semper.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                                        What Services Does The Firefighter Department Provide Besides Responding To Fires?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Nam ac neque sit amet velit gravida laoreet. Pellentesque nunc dolor, fermentum
+                                        ut dictum eu, ornare quis leo. Suspendisse varius, eros non posuere egestas,
+                                        ipsum augue congue nunc, sed gravida ante purus at diam. Suspendisse potenti.
+                                        Aenean venenatis semper.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                                        How Can I Obtain A Copy Of A Fire Incident Report?  
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Nam ac neque sit amet velit gravida laoreet. Pellentesque nunc dolor, fermentum
+                                        ut dictum eu, ornare quis leo. Suspendisse varius, eros non posuere egestas,
+                                        ipsum augue congue nunc, sed gravida ante purus at diam. Suspendisse potenti.
+                                        Aenean venenatis semper.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq4" aria-expanded="true" aria-controls="faq4">
+                                        How Can I Schedule A Fire Safety Inspection For My Home Or Business?
+                                    </button>
+                                </h2>
+                                <div id="faq4" class="accordion-collapse collapse "
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Nam ac neque sit amet velit gravida laoreet. Pellentesque nunc dolor, fermentum
+                                        ut dictum eu, ornare quis leo. Suspendisse varius, eros non posuere egestas,
+                                        ipsum augue congue nunc, sed gravida ante purus at diam. Suspendisse potenti.
+                                        Aenean venenatis semper.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
+                                        What Should I Include In My Family's Emergency Preparedness Plan?   
+                                    </button>
+                                </h2>
+                                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Nam ac neque sit amet velit gravida laoreet. Pellentesque nunc dolor, fermentum
+                                        ut dictum eu, ornare quis leo. Suspendisse varius, eros non posuere egestas,
+                                        ipsum augue congue nunc, sed gravida ante purus at diam. Suspendisse potenti.
+                                        Aenean venenatis semper.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq6" aria-expanded="false" aria-controls="faq6">
+                                        Can I Tour A Local Fire Station And Learn More About The Department's Operations?
+                                    </button>
+                                </h2>
+                                <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Nam ac neque sit amet velit gravida laoreet. Pellentesque nunc dolor, fermentum
+                                        ut dictum eu, ornare quis leo. Suspendisse varius, eros non posuere egestas,
+                                        ipsum augue congue nunc, sed gravida ante purus at diam. Suspendisse potenti.
+                                        Aenean venenatis semper.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq7" aria-expanded="false" aria-controls="faq7">
+                                        What Should I Do If I Need A Fire Permit For A Specific Activity Or Event?
+                                    </button>
+                                </h2>
+                                <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Nam ac neque sit amet velit gravida laoreet. Pellentesque nunc dolor, fermentum
+                                        ut dictum eu, ornare quis leo. Suspendisse varius, eros non posuere egestas,
+                                        ipsum augue congue nunc, sed gravida ante purus at diam. Suspendisse potenti.
+                                        Aenean venenatis semper.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <div class="section py-5 position-relative" style="background-color: #0a0e1a;">
+            <div class="r-container position-relative" style="z-index: 2;">
+                <div class="row row-cols-lg-4 row-cols-md-2 row-cols-1 g-5">
+                    
+                    <div class="col">
+                        <div class="d-flex flex-column gap-3">
+                            <img src="{% static 'image/Logo.webp' %}" alt="Fourth Corner Logo" class="img-fluid" width="200">
+                            <p class="opacity-75 mt-2" style="font-size: 0.9rem; line-height: 1.8;">
+                            Fourth Corner is an Iraqi company providing integrated engineering and industrial solutions, committed to quality, safety, and reliability across Iraq. 
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Quick Links</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-2">
+                            <li><a href="{% url 'about' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>About Us</a></li>
+                            <li><a href="{% url 'service' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>Services</a></li>
+                            <li><a href="{% url 'contact' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Services</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li>
+                                <a href="{% url 'fire_industry' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>FIRE & INDUSTRIAL SAFETY</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'electrical_systems' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>ELECTRICAL & POWER SYSTEMS</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'construction' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>ENGINEERING CONSTRUCTION</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Get In Touch</h5>
+                        <div class="d-flex flex-column gap-3">
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-location-dot me-2 accent-color"></i>Second Floor, Fourth Corner, Basra, Iraq</p>
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-phone me-2 accent-color"></i>+964 780227 5772</p>
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-envelope me-2 accent-color"></i> info@fourth-corner.com</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="py-3 border-top border-secondary" style="background-color: #0a0e1a;">
+            <div class="container text-center">
+                <span class="opacity-50 small">
+                    Copyright © 2025 **FOURTH-CORNER**. All Rights Reserved.
+                </span>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="{% static 'js/vendor/bootstrap.bundle.min.js' %}" defer></script>
+    <script src="{% static 'js/script.js' %}" defer></script>
+    <script src="{% static 'js/vendor/isotope.pkgd.min.js' %}" defer></script>
+    <script src="{% static 'js/video_embedded.js' %}" defer></script>
+    <script src="{% static 'js/vendor/fslightbox.js' %}" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,519 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/solid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/brands.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/regular.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="icon" type="image/webp" sizes="32x32" href="{% static 'image/favicon-32x32.webp' %}">
+    <link rel="icon" type="image/webp" sizes="16x16" href="{% static 'image/favicon-16x16.webp' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'image/apple-touch-icon.webp' %}">
+    
+    <title>FOURTH-CORNER - Services</title>
+</head>
+
+<body>
+    <div id="google_translate_wrapper">
+        <div id="google_translate_element"></div>
+    </div>
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'ar,en,fr,es,de,it,zh-CN,hi,pt,ru',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+    }, 'google_translate_element');
+    }
+
+    // THIS KILLS THE TOP BAR AUTOMATICALLY - Using MutationObserver for better performance
+    (function() {
+        var banner = document.querySelector(".goog-te-banner-frame");
+        if(banner) {
+            banner.style.display = 'none';
+            document.body.style.top = '0px';
+            return; // Exit early if banner already exists
+        }
+        
+        // Use MutationObserver to watch for banner creation
+        var observer = new MutationObserver(function(mutations) {
+            var banner = document.querySelector(".goog-te-banner-frame");
+            if(banner) {
+                banner.style.display = 'none';
+                document.body.style.top = '0px';
+                observer.disconnect(); // Stop observing after success
+            }
+        });
+        
+        // Start observing the document body for changes
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+        
+        // Fallback: Clear observer after 5 seconds to prevent memory leaks
+        setTimeout(function() {
+            observer.disconnect();
+        }, 5000);
+    })();
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        /* POSITION & TRANSPARENCY */
+        #google_translate_wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999999 !important;
+            background: transparent !important;
+            pointer-events: auto !important;
+        }
+
+        /* DARK MODE BUTTON STYLE */
+        .goog-te-gadget .goog-te-combo {
+            background: rgba(10, 17, 40, 0.9) !important; /* Theme dark blue */
+            color: #ffffff !important;
+            border: 1px solid #f02d2d !important; /* Theme red border */
+            padding: 8px !important;
+            border-radius: 4px !important;
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+        }
+
+        /* THE HARD HIDER - Targets the bar in image_f567a9.webp */
+        body { 
+            top: 0 !important; 
+            position: static !important; 
+        }
+        
+        .goog-te-banner-frame, 
+        .goog-te-banner, 
+        .goog-te-balloon-frame,
+        #goog-gt-tt,
+        .goog-te-spawn-frame,
+        .skiptranslate iframe {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0 !important;
+        }
+
+        /* Hiding the tooltips on hover */
+        .goog-tooltip, .goog-tooltip:hover {
+            display: none !important;
+        }
+
+        /* MOBILE FIX */
+        @media (max-width: 768px) {
+            #google_translate_wrapper {
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+    <!-- Scripts -->
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+
+    <!-- Header -->
+    <div class="sticky-top bg-dark-color">
+        <div class="r-container">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <div class="logo-container">
+                        <a class="navbar-brand" href="{% url 'index' %}">
+                            <img src="{% static 'image/Logo.webp' %}" alt="fourth-corner" class="img-fluid">
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-4 gap-2 px-lg-0 px-4">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'about' %}">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'service' %}">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'project' %}">Projects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'blog_list' %}">Blog</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'career' %}">Career</a>
+                            </li>                            
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'contact' %}">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main>
+        <!-- Banner -->
+    {% static 'image/service-banner.webp' as service_bg %}
+    <div class="section position-relative reveal-trigger" style="background-image: url('{{ service_bg }}'); background-size: cover; background-position: center;">
+        <div class="image-overlay"></div>
+        <div class="r-container h-100 position-relative" style="z-index: 2;">
+            <div class="d-flex flex-column w-100 h-100 justify-content-center align-items-center mx-auto text-center text-white gap-3 py-5"
+                style="max-width: 895px;">
+                
+                <h1 class="font-1 m-0 fw-bold scroll-reveal del-1">SERVICES</h1>
+                
+                <nav aria-label="breadcrumb" class="scroll-reveal del-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></li>
+                        <li class="breadcrumb-item active text-danger fw-bold" aria-current="page">Services</li>
+                    </ol>
+                </nav>
+                
+            </div>
+        </div>
+    </div>
+
+    <section class="py-5 reveal-trigger" style="background-color: var(--dark-color); color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden;">
+        <div class="container py-lg-5">
+            
+            <div class="row mb-5 justify-content-center text-center">
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-center justify-content-center gap-3 mb-2 scroll-reveal del-1">
+                        <div style="width: 40px; height: 2px; background-color: #f02d2d;"></div>
+                        <span class="text-uppercase fw-bold" style="color: #f02d2d; letter-spacing: 4px; font-size: 0.85rem;">Core Expertise</span>
+                        <div style="width: 40px; height: 2px; background-color: #f02d2d;"></div>
+                    </div>
+                    <h2 class="display-5 fw-bolder text-white text-uppercase scroll-reveal del-2">Specialized <span style="color: #f02d2d;">Services</span></h2>
+                    <p class="text-white opacity-50 mt-3 fs-6 px-lg-5 scroll-reveal del-3">
+                        Fourth Corner provides multidisciplinary solutions tailored to the rigorous demands of Iraq's energy and industrial sectors. Select a division to view our full capabilities.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-4 row-cols-1 row-cols-lg-3">
+                
+                <div class="col scroll-reveal del-4">
+                    <a href="{% url 'fire_industry' %}" class="text-decoration-none">
+                        <div class="card border-0 rounded-0 position-relative overflow-hidden creative-card-hover" style="height: 450px; background: #0a1128;">
+                            <img src="{% static 'image/service-1.webp' %}" alt="Fire Safety" class="position-absolute w-100 h-100 object-fit-cover card-zoom-img" style="filter: brightness(0.4);">
+                            <div class="card-body position-relative d-flex flex-column justify-content-end p-4 h-100 z-1" style="border-bottom: 4px solid #f02d2d;">
+                                <span class="text-uppercase fw-bold small mb-2" style="letter-spacing: 2px; color: rgba(255,255,255,0.6);">Division 01</span>
+                                <h3 class="fw-bolder text-uppercase text-white lh-1 display-6 mb-0">
+                                    Fire & <br><span style="color: #f02d2d;">Industrial Safety</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col scroll-reveal del-5">
+                    <a href="{% url 'electrical_systems' %}" class="text-decoration-none">
+                        <div class="card border-0 rounded-0 position-relative overflow-hidden creative-card-hover" style="height: 450px; background: #0a1128;">
+                            <img src="{% static 'image/d2-p1-2.webp' %}" alt="Electrical Systems" class="position-absolute w-100 h-100 object-fit-cover card-zoom-img" style="filter: brightness(0.4);">
+                            <div class="card-body position-relative d-flex flex-column justify-content-end p-4 h-100 z-1" style="border-bottom: 4px solid #f02d2d;">
+                                <span class="text-uppercase fw-bold small mb-2" style="letter-spacing: 2px; color: rgba(255,255,255,0.6);">Division 02</span>
+                                <h3 class="fw-bolder text-uppercase text-white lh-1 display-6 mb-0">
+                                    Electrical & <br><span style="color: #f02d2d;">Power Systems</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col scroll-reveal del-6">
+                    <a href="{% url 'construction' %}" class="text-decoration-none">
+                        <div class="card border-0 rounded-0 position-relative overflow-hidden creative-card-hover" style="height: 450px; background: #0a1128;">
+                            <img src="{% static 'image/d3-p1-3.webp' %}" alt="Engineering Construction" class="position-absolute w-100 h-100 object-fit-cover card-zoom-img" style="filter: brightness(0.4);">
+                            <div class="card-body position-relative d-flex flex-column justify-content-end p-4 h-100 z-1" style="border-bottom: 4px solid #f02d2d;">
+                                <span class="text-uppercase fw-bold small mb-2" style="letter-spacing: 2px; color: rgba(255,255,255,0.6);">Division 03</span>
+                                <h3 class="fw-bolder text-uppercase text-white lh-1 display-6 mb-0">
+                                    Engineering <br><span style="color: #f02d2d;">Construction</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+        {% static 'image/cta-bottom.webp' as cta_bg %}
+        <div class="section position-relative bg-attach-fixed reveal-trigger"
+            style="background-image: url('{{ cta_bg }}');">
+            <div class="image-overlay-gradient bg-black"></div>
+            <div class="r-container position-relative" style="z-index: 2;">
+                <div class="d-flex flex-column gap-3 align-items-center text-center mb-5">
+                    <div class="w-75">
+                        <span class="subheading scroll-reveal del-1" style="display: block; margin-bottom: 20px;">Serve And Protect</span>
+                        
+                        <div class="mx-auto">
+                            <h1 class="font-1 fw-bolder lh-1 scroll-reveal del-2" style="font-size: 3rem; line-height: 1.5;">NEED US? WE ARE ALWAYS AVAILABLE 24 HOURS</h1>
+                        </div>
+                        
+                        <p class="scroll-reveal del-3">
+                            Our dedicated team is ready around the clock to support your industrial, engineering, electrical, and safety requirements, ensuring reliable solutions whenever you need them.
+                        </p>
+                        
+                            <div class="w-100">
+                                <a href="{% url 'contact' %}" class="btn btn-accent font-1 fw-bold">Contact Us</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+   <div class="section px-3 px-lg-0 reveal-trigger" style="background-color: var(--secondary-color); padding: 80px 0;">
+        <div class="r-container">
+            <div class="row g-5 align-items-center">
+                
+                <div class="col-lg-6">
+                    <div class="d-flex flex-column gap-2 text-white ms-md-0 ms-2">
+                        <span class="text-uppercase fw-bold text-danger font-1 scroll-reveal from-left del-1" style="letter-spacing: 2px; font-size: 0.9rem;">Contact Info</span>
+                        <h2 class="display-4 font-1 fw-bolder mb-3 text-uppercase scroll-reveal from-left del-2" style="font-size: 2rem; line-height: 1.1;">ALWAYS READY <br class="d-none d-md-block"> TO HELP</h2>
+                        <p class="opacity-75 mb-4 mb-lg-5 w-100 w-lg-75 font-1 scroll-reveal from-left del-3">
+                            Providing professional firefighting solutions and emergency services since 2015.
+                        </p>
+
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            <div class="col d-flex align-items-start gap-3 scroll-reveal from-bottom del-1">
+                                <div class="text-danger fs-2 mt-1"><i class="fa-solid fa-location-dot"></i></div>
+                                <div>
+                                    <h6 class="fw-bold mb-2 font-1 text-danger" style="letter-spacing: 1.5px; font-size: 0.75rem;">OFFICE LOCATION</h6>
+                                    <div class="font-1 text-white">
+                                        <span class="d-block mb-1 fw-bold" style="letter-spacing: 1px; font-size: 1rem;">FOURTH CORNER, Basra, Iraq</span>
+                                        
+                                        <div class="d-inline-block bg-danger px-3 py-1 shadow-sm mt-1 mb-2" style="border-radius: 2px;">
+                                            <span class="fw-black text-uppercase text-white" style="font-size: 1rem; letter-spacing: 1px;">
+                                                SECOND <span style="font-weight: 400; opacity: 0.9;">FLOOR</span>
+                                            </span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col d-flex align-items-start gap-3 scroll-reveal from-bottom del-2">
+                                <div class="text-danger fs-2 mt-1"><i class="fa-solid fa-phone"></i></div>
+                                <div>
+                                    <h6 class="fw-bold mb-2 font-1" style="letter-spacing: 1.5px; font-size: 0.75rem; opacity: 0.7;">PHONE NUMBER</h6>
+                                    <span class="fw-bold font-1 d-block" style="font-size: 1.1rem;">+964 780227 5772</span>
+                                </div>
+                            </div>
+
+                            <div class="col d-flex align-items-start gap-3 scroll-reveal from-bottom del-3">
+                                <div class="text-danger fs-2 mt-1"><i class="fa-solid fa-envelope"></i></div>
+                                <div>
+                                    <h6 class="fw-bold mb-2 font-1" style="letter-spacing: 1.5px; font-size: 0.75rem; opacity: 0.7;">EMAIL</h6>
+                                    <span class="fw-bold font-1 d-block text-uppercase" style="font-size: 0.95rem;">INFO@FOURTH-CORNER.COM</span>
+                                </div>
+                            </div>
+
+                           <div class="col d-flex align-items-start gap-3 scroll-reveal from-bottom del-4">
+                                <div class="text-danger fs-2 mt-1"><i class="fa-solid fa-globe"></i></div>
+                                <div>
+                                    <h6 class="fw-bold mb-2 font-1" style="letter-spacing: 1.5px; font-size: 0.75rem; opacity: 0.7;">WEBSITE</h6>
+                                    <span class="fw-bold font-1 d-block" style="font-size: 0.95rem;">www.fourth-corner.iq</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mt-lg-5 scroll-reveal from-bottom del-5">
+                            <h6 class="fw-bold mb-3 font-1 text-uppercase opacity-50" style="font-size: 0.7rem; letter-spacing: 2px;">Follow Us :</h6>
+                            <div class="d-flex gap-3">
+                                <a href="https://www.linkedin.com/company/fourth-corner-company-for-contracting-general-trading/" class="btn btn-outline-light rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                                    <i class="fa-brands fa-linkedin-in small"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+                <div class="col-lg-6">
+                    <div class="p-4 p-md-5 rounded-4 border border-secondary border-opacity-50" style="background-color: rgba(255,255,255,0.02);">
+                        <h4 class="text-white font-1 fw-bold mb-4 text-uppercase">Any Question? <span class="text-danger">Fill below</span></h4>
+                        
+                        <form id="contactForm">
+                            <div class="row g-3">
+                                <div class="col-md-6 text-white">
+                                    <label class="small fw-bold mb-1 font-1">NAME *</label>
+                                    <input type="text" name="user_name" class="form-control bg-transparent text-white border-secondary py-2" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6 text-white">
+                                    <label class="small fw-bold mb-1 font-1">EMAIL *</label>
+                                    <input type="email" name="user_email" class="form-control bg-transparent text-white border-secondary py-2" placeholder="Your Email" required>
+                                </div>
+                                <div class="col-12 text-white">
+                                    <label class="small fw-bold mb-1 font-1">SUBJECT *</label>
+                                    <input type="text" name="subject" class="form-control bg-transparent text-white border-secondary py-2" placeholder="Your Subject" required>
+                                </div>
+                                <div class="col-12 text-white">
+                                    <label class="small fw-bold mb-1 font-1">MESSAGE</label>
+                                    <textarea name="message" class="form-control bg-transparent text-white border-secondary" rows="4" placeholder="Your Message" required></textarea>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" id="submitBtn" class="btn btn-danger w-100 py-3 fw-bold text-uppercase">Submit Now</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <script>
+                (function() {
+                    // PASTE YOUR PUBLIC KEY HERE
+                    emailjs.init("QjQNCqhZ3ml41dBz_"); 
+                })();
+
+                document.getElementById('contactForm').addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const btn = document.getElementById('submitBtn');
+                    btn.disabled = true;
+                    btn.innerText = 'Sending...';
+
+                    // PASTE YOUR IDs HERE
+                    const serviceID = 'service_8ik987i';
+                    const templateID = 'template_493ybcx';
+
+                    emailjs.sendForm(serviceID, templateID, this)
+                        .then(() => {
+                            btn.disabled = false;
+                            btn.innerText = 'Submit Now';
+                            
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Message sent successfully',
+                                icon: 'success',
+                                background: '#0a1128', // Navy theme
+                                color: '#fff',
+                                confirmButtonColor: '#f02d2d'
+                            });
+                            
+                            this.reset();
+                        }, (err) => {
+                            btn.disabled = false;
+                            btn.innerText = 'Submit Now';
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Failed to send: ' + JSON.stringify(err),
+                                icon: 'error'
+                            });
+                        });
+                });
+                </script>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <div class="section py-5 position-relative" style="background-color: #0a0e1a;">
+            <div class="r-container position-relative" style="z-index: 2;">
+                <div class="row row-cols-lg-4 row-cols-md-2 row-cols-1 g-5">
+                    
+                    <div class="col">
+                        <div class="d-flex flex-column gap-3">
+                            <img src="{% static 'image/Logo.webp' %}" alt="Fourth Corner Logo" class="img-fluid" width="200">
+                            <p class="opacity-75 mt-2" style="font-size: 0.9rem; line-height: 1.8;">
+                            Fourth Corner is an Iraqi company providing integrated engineering and industrial solutions, committed to quality, safety, and reliability across Iraq. 
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Quick Links</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-2">
+                            <li><a href="{% url 'about' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>About Us</a></li>
+                            <li><a href="{% url 'service' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>Services</a></li>
+                            <li><a href="{% url 'contact' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Services</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li>
+                                <a href="{% url 'fire_industry' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>FIRE & INDUSTRIAL SAFETY</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'electrical_systems' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>ELECTRICAL & POWER SYSTEMS</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'construction' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>ENGINEERING CONSTRUCTION</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Get In Touch</h5>
+                        <div class="d-flex flex-column gap-3">
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-location-dot me-2 accent-color"></i>Second Floor, Fourth Corner, Basra, Iraq</p>
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-phone me-2 accent-color"></i>+964 780227 5772</p>
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-envelope me-2 accent-color"></i> info@fourth-corner.com</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="py-3 border-top border-secondary" style="background-color: #0a0e1a;">
+            <div class="container text-center">
+                <span class="opacity-50 small">
+                    Copyright © 2025 **FOURTH-CORNER**. All Rights Reserved.
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/vendor/bootstrap.bundle.min.js' %}" defer></script>
+    <script src="{% static 'js/script.js' %}" defer></script>
+    <script src="{% static 'js/vendor/isotope.pkgd.min.js' %}" defer></script>
+    <script src="{% static 'js/video_embedded.js' %}" defer></script>
+    <script src="{% static 'js/vendor/fslightbox.js' %}" defer></script>
+</body>
+
+</html>

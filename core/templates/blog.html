@@ -1,0 +1,433 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/solid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/brands.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/regular.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="icon" type="image/webp" sizes="32x32" href="{% static 'image/favicon-32x32.webp' %}">
+    <link rel="icon" type="image/webp" sizes="16x16" href="{% static 'image/favicon-16x16.webp' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'image/apple-touch-icon.webp' %}">
+    
+    <title>FOURTH-CORNER-Blog</title>
+</head>
+
+<body>
+    <div id="google_translate_wrapper">
+        <div id="google_translate_element"></div>
+    </div>
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'ar,en,fr,es,de,it,zh-CN,hi,pt,ru',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+    }, 'google_translate_element');
+    }
+
+    // THIS KILLS THE TOP BAR AUTOMATICALLY - Using MutationObserver for better performance
+    (function() {
+        var banner = document.querySelector(".goog-te-banner-frame");
+        if(banner) {
+            banner.style.display = 'none';
+            document.body.style.top = '0px';
+            return; // Exit early if banner already exists
+        }
+        
+        // Use MutationObserver to watch for banner creation
+        var observer = new MutationObserver(function(mutations) {
+            var banner = document.querySelector(".goog-te-banner-frame");
+            if(banner) {
+                banner.style.display = 'none';
+                document.body.style.top = '0px';
+                observer.disconnect(); // Stop observing after success
+            }
+        });
+        
+        // Start observing the document body for changes
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+        
+        // Fallback: Clear observer after 5 seconds to prevent memory leaks
+        setTimeout(function() {
+            observer.disconnect();
+        }, 5000);
+    })();
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        /* POSITION & TRANSPARENCY */
+        #google_translate_wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999999 !important;
+            background: transparent !important;
+            pointer-events: auto !important;
+        }
+
+        /* DARK MODE BUTTON STYLE */
+        .goog-te-gadget .goog-te-combo {
+            background: rgba(10, 17, 40, 0.9) !important; /* Theme dark blue */
+            color: #ffffff !important;
+            border: 1px solid #f02d2d !important; /* Theme red border */
+            padding: 8px !important;
+            border-radius: 4px !important;
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+        }
+
+        /* THE HARD HIDER - Targets the bar in image_f567a9.webp */
+        body { 
+            top: 0 !important; 
+            position: static !important; 
+        }
+        
+        .goog-te-banner-frame, 
+        .goog-te-banner, 
+        .goog-te-balloon-frame,
+        #goog-gt-tt,
+        .goog-te-spawn-frame,
+        .skiptranslate iframe {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0 !important;
+        }
+
+        /* Hiding the tooltips on hover */
+        .goog-tooltip, .goog-tooltip:hover {
+            display: none !important;
+        }
+
+        /* MOBILE FIX */
+        @media (max-width: 768px) {
+            #google_translate_wrapper {
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        /* Base Pagination Styles */
+        .pagination-container {
+            display: flex;
+            flex-direction: row; /* Forces horizontal layout */
+            gap: 8px;            /* Space between buttons */
+            flex-wrap: nowrap;   /* Prevents stacking on small screens */
+        }
+
+        .pagination-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;      /* Square shape for numbers */
+            height: 40px;
+            padding: 0 15px;      /* Extra padding for "Next/Prev" words */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+            border: 1px solid #dc3545;
+        }
+
+        /* Red Active Box (Current Page) */
+        .pagination-btn.active {
+            background-color: #dc3545;
+            color: #ffffff;
+        }
+
+        /* Outline Boxes (Other pages and Next/Prev) */
+        .pagination-btn.outline {
+            background-color: transparent;
+            color: #f02d2d;
+        }
+
+        .pagination-btn.outline:hover {
+            background-color: rgba(240, 45, 45, 0.1);
+            color: #ffffff;
+        }
+
+        /* MOBILE FIX: Scales down buttons so they don't break the screen width */
+        @media (max-width: 576px) {
+            .pagination-btn {
+                min-width: 35px;
+                height: 35px;
+                padding: 0 10px;
+                font-size: 12px;
+            }
+            .pagination-container {
+                gap: 5px;
+                padding: 5px;
+            }
+        }
+    </style>
+    <!-- Scripts -->
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+
+    <!-- Header -->
+    <div class="sticky-top bg-dark-color">
+        <div class="r-container">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <div class="logo-container">
+                        <a class="navbar-brand" href="{% url 'index' %}">
+                            <img src="{% static 'image/Logo.webp' %}" alt="fourth-corner" class="img-fluid">
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-4 gap-2 px-lg-0 px-4">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'about' %}">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'service' %}">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'project' %}">Projects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'blog_list' %}">Blog</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'career' %}">Career</a>
+                            </li>                            
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{% url 'contact' %}">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main>
+        <!-- Banner -->
+        {% static 'image/service-banner.webp' as service_bg %}
+        <div class="section position-relative reveal-trigger" style="background-image: url('{{ service_bg }}'); background-size: cover; background-position: center;">
+            <div class="image-overlay"></div>
+            <div class="r-container h-100 position-relative" style="z-index: 2;">
+                <div class="d-flex flex-column w-100 h-100 justify-content-center align-items-center mx-auto text-center text-white gap-3 py-5"
+                    style="max-width: 895px;">
+                    
+                    <h1 class="font-1 m-0 fw-bold scroll-reveal del-1">BLOG</h1>
+                    
+                    <nav aria-label="breadcrumb" class="scroll-reveal del-2">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item active text-danger fw-bold" aria-current="page">Blog</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    <section class="py-5 reveal-trigger" style="background-color: --selector-bg-color; color: #ffffff; min-height: 100vh;">
+            <div class="container py-lg-5">
+                
+                <div class="mb-5 scroll-reveal">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <div style="width: 50px; height: 2px; background: #f02d2d;"></div>
+                        <h6 class="text-danger fw-bold text-uppercase mb-0" style="letter-spacing: 5px;">Our Journal</h6>
+                    </div>
+                    <h2 class="display-5 fw-bolder text-uppercase scroll-reveal">
+                        Latest <span style="color: #f02d2d;">Engineering</span> News
+                    </h2>
+                </div>
+
+                <div class="row g-4 scroll-reveal">
+                    {% for post in page_obj %}
+                    <div class="col-12 col-md-6 col-lg-4 scroll-reveal">
+                        <div class="card h-100 border-0 rounded-0 shadow-lg scroll-reveal" style="background: #0b1630; transition: transform 0.3s ease;">
+                            <div class="position-relative overflow-hidden" style="height: 240px;">
+                                <a href="{{ post.get_absolute_url }}">
+                                    <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="w-100 h-100" style="object-fit: cover; transition: 0.5s ease;" loading="lazy">
+                                </a>
+                                <div class="position-absolute top-0 start-0 bg-danger text-white px-3 py-2 small fw-bold text-uppercase">
+                                    {{ post.created_at|date:"M d" }}
+                                </div>
+                            </div>
+
+                            <div class="card-body p-4 scroll-reveal">
+                                <div class="d-flex gap-3 mb-3 x-small text-danger fw-bold text-uppercase">
+                                    <span><i class="fa-solid fa-user me-1"></i> {{ post.author.username|default:"ADMIN" }}</span>
+                                    <span><i class="fa-solid fa-clock me-1"></i> {{ post.created_at|date:"Y" }}</span>
+                                </div>
+                                
+                                <h4 class="h5 fw-bold text-uppercase mb-3 scroll-reveal">
+                                    <a href="{{ post.get_absolute_url }}" class="text-white text-decoration-none hover-red">
+                                        {{ post.title }}
+                                    </a>
+                                </h4>
+                                
+                                <p class="text-white-50 small mb-4 scroll-reveal" style="line-height: 1.6;">
+                                    {{ post.summary|truncatechars:120 }}
+                                </p>
+
+                                <a href="{{ post.get_absolute_url }}" class="text-danger text-decoration-none fw-bold small text-uppercase scroll-reveal" style="letter-spacing: 1px;">
+                                    Read Full Post <i class="fa-solid fa-arrow-right-long ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-5">
+                        <p class="opacity-50 fs-4 text-white">No blog posts available at the moment.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if page_obj.has_other_pages %}
+                <div class="mt-5 d-flex justify-content-center">
+                    <div class="pagination-container d-flex align-items-center bg-dark-color p-2 border border-secondary border-opacity-25">
+                        
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-btn outline">Prev</a>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <span class="pagination-btn active">{{ num }}</span>
+                            {% else %}
+                                <a href="?page={{ num }}" class="pagination-btn outline">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="pagination-btn outline">Next</a>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+    <style>
+        /* Ensure the Hover Effects work with your existing style */
+        .project-item:hover .project-img {
+            transform: scale(1.1);
+            transition: 0.6s ease;
+        }
+        .project-item {
+            transition: 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .project-item:hover {
+            border-color: #f02d2d;
+        }
+        .pagination .btn {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+
+    
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white">
+        <div class="section py-5 position-relative" style="background-color: #0a0e1a;">
+            <div class="r-container position-relative" style="z-index: 2;">
+                <div class="row row-cols-lg-4 row-cols-md-2 row-cols-1 g-5">
+                    
+                    <div class="col">
+                        <div class="d-flex flex-column gap-3">
+                            <img src="{% static 'image/Logo.webp' %}" alt="Fourth Corner Logo" class="img-fluid" width="200">
+                            <p class="opacity-75 mt-2" style="font-size: 0.9rem; line-height: 1.8;">
+                            Fourth Corner is an Iraqi company providing integrated engineering and industrial solutions, committed to quality, safety, and reliability across Iraq. 
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Quick Links</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-2">
+                            <li><a href="{% url 'about' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>About Us</a></li>
+                            <li><a href="{% url 'service' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>Services</a></li>
+                            <li><a href="{% url 'contact' %}" class="text-white text-decoration-none opacity-75-hover small"><i class="fa-solid fa-caret-right accent-color me-2"></i>Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Services</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li>
+                                <a href="{% url 'fire_industry' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>FIRE & INDUSTRIAL SAFETY</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'electrical_systems' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>ELECTRICAL & POWER SYSTEMS</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'construction' %}" class="text-white text-decoration-none opacity-75-hover d-flex align-items-start small" style="letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-caret-right accent-color me-2 mt-1"></i>
+                                    <span>ENGINEERING CONSTRUCTION</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col">
+                        <h5 class="font-1 fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Get In Touch</h5>
+                        <div class="d-flex flex-column gap-3">
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-location-dot me-2 accent-color"></i>Second Floor, Fourth Corner, Basra, Iraq</p>
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-phone me-2 accent-color"></i>+964 780227 5772</p>
+                            <p class="opacity-75 mb-0 small"><i class="fa-solid fa-envelope me-2 accent-color"></i> info@fourth-corner.com</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="py-3 border-top border-secondary" style="background-color: #0a0e1a;">
+            <div class="container text-center">
+                <span class="opacity-50 small">
+                    Copyright © 2025 **FOURTH-CORNER**. All Rights Reserved.
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/vendor/bootstrap.bundle.min.js' %}" defer></script>
+    <script src="{% static 'js/script.js' %}" defer></script>
+    <script src="{% static 'js/vendor/isotope.pkgd.min.js' %}" defer></script>
+    <script src="{% static 'js/video_embedded.js' %}" defer></script>
+    <script src="{% static 'js/vendor/fslightbox.js' %}" defer></script>
+</body>
+
+</html>
