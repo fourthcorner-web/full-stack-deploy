@@ -147,7 +147,7 @@ STATICFILES_DIRS = [
 
 # Media files settings
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = '/opt/render/project/src/media
 
 # This is CRITICAL for Render to serve your Jazzmin styles correctly
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
