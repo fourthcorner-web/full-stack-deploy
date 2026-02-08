@@ -24,7 +24,7 @@ handler404 = 'core.views.custom_404'
 handler500 = 'core.views.custom_500'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('control-9f8a4c2dtb1m/', admin.site.urls),
     path('', include('core.urls')), 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
